@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import req from './login'
+import req from '@/utils/request.js'
 export default {
   data() {
     return {
@@ -73,7 +73,22 @@ export default {
         if (valid) {
           req(`/login/cellphone?phone=${this.ruleForm.phone}&password=${this.ruleForm.password}`)
             .then((res) => {
-              console.log(res)
+              if (res.data.code === 200) {
+                this.$message({
+                  message: 'create success',
+                  type: 'success',
+                  duration: 800,
+                  onClose: () => {
+                    window.localStorage['token'] = JSON.stringify(res.data.token)
+                    this.$router.push('/player')
+                  }
+                })
+              } else {
+                this.$message({
+                  message: 'Login warning',
+                  type: 'warning'
+                })
+              }
             })
         } else {
           console.log('error submit!!')
@@ -84,14 +99,6 @@ export default {
     getCaptcha() {
       req(`/captcha/sent?phone=${this.userInfo.phone}`)
         .then((res) => {
-          if (res.data.code === 200) {
-            console.log(1)
-          }
-        })
-    },
-    createUser() {
-      req(`/register/cellphone?phone=${this.userInfo.phone}&password=${this.userInfo.password}&captcha=${this.userInfo.captcha}&nickname=${this.userInfo.nickname}`)
-        .then(res => {
           console.log(res)
           if (res.data.code === 200) {
             this.$message({
@@ -100,10 +107,17 @@ export default {
               duration: 800,
               onClose: () => {
                 this.dialogFormVisible = false
-                window.localStorage['token'] = JSON.stringify(res.data.token)
               }
             })
           }
+        }).catch(err => {
+          throw err
+        })
+    },
+    createUser() {
+      req(`/register/cellphone?phone=${this.userInfo.phone}&password=${this.userInfo.password}&captcha=${this.userInfo.captcha}&nickname=${this.userInfo.nickname}`)
+        .then(res => {
+          console.log(res)
         }).catch(err => {
           throw err
         })
