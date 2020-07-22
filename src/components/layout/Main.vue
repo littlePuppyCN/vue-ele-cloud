@@ -11,7 +11,7 @@
           <i v-show="!listIsActive.mine" class="el-icon-arrow-right" />
           <i v-show="listIsActive.mine" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.mine">
-            <li v-for="(i,index) in songList" :key="index" class="in">{{ i.name }}</li>
+            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongList(i.id)">{{ i.name }}</li>
           </ul>
         </li>
         <li
@@ -23,7 +23,7 @@
           <i v-show="!listIsActive.collect" class="el-icon-arrow-right" />
           <i v-show="listIsActive.collect" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.collect">
-            <li v-for="(i,index) in collectList" :key="index" class="in">{{ i.name }}</li>
+            <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongList(i.id)">{{ i.name }}</li>
           </ul>
         </li>
       </ul>
@@ -52,6 +52,8 @@ export default {
     getUserList() {
       req(`/user/playlist?uid=${this.$store.getters.getUser.userId}`).then(
         res => {
+          console.log(res)
+
           this.songList = res.data.playlist.filter(item => {
             return !item.subscribed
           })
@@ -60,6 +62,12 @@ export default {
           })
         }
       )
+    },
+    getSongList(id) {
+      req(`/playlist/detail?id=${id}`)
+        .then(res => {
+          console.log(res)
+        })
     }
   }
 }
