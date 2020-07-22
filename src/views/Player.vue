@@ -2,15 +2,18 @@
   <div id="container">
     <div id="player">
       <HEADER />
+      <MAIN />
     </div>
   </div>
 </template>
 
 <script>
 import HEADER from '@/components/layout/Header'
+import MAIN from '@/components/layout/Main'
 export default {
   components: {
-    HEADER
+    HEADER,
+    MAIN
   }
 }
 </script>

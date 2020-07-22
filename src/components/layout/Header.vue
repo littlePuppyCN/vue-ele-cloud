@@ -1,20 +1,20 @@
 <template>
   <div id="header_wrap">
     <div class="left">
-      <div class="name">ZY-PLAYER</div>
+      <div class="name">ZYPLAYER</div>
     </div>
     <div class="right">
       <div class="userinfo">
-        <el-dropdown>
+        <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            下拉菜单<i class="el-icon-arrow-down el-icon--right" />
+            <span class="userImg">
+              <img :src="$store.getters.getUser.avatarUrl" alt="">
+            </span>
+            {{ $store.getters.getUser.nickname }}
+            <i class="el-icon-arrow-down el-icon--right" />
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item v-if="$store.getters.isLogin" @click.native="logout">log out</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -23,17 +23,36 @@
 </template>
 
 <script>
-export default {
+import req from '@/utils/request.js'
 
+export default {
+  methods: {
+    logout() {
+      req('/logout').then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: 'create success',
+            type: 'success',
+            duration: 800,
+            onClose: () => {
+              this.$store.commit('delToken')
+              this.$store.commit('delUser')
+              this.$router.push('/')
+            }
+          })
+        }
+      })
+    }
+  }
 }
 </script>
 
 <style lang='less'>
 #header_wrap{
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: rgba(0,0,0,0.2);
-    line-height: 60px;
+    line-height: 50px;
     display: flex;
     box-sizing: border-box;
     .left{
@@ -44,6 +63,22 @@ export default {
     }
     .right{
         flex: 1;
+        display: flex;
+        .el-dropdown-link{
+            display: flex;
+            align-items: center;
+        }
+        .userImg{
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            img{
+                width: 100%;
+                height: 100%;
+                display: block;
+
+            }
+        }
     }
 
 }

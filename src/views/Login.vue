@@ -73,13 +73,15 @@ export default {
         if (valid) {
           req(`/login/cellphone?phone=${this.ruleForm.phone}&password=${this.ruleForm.password}`)
             .then((res) => {
+              console.log(res)
               if (res.data.code === 200) {
                 this.$message({
                   message: 'create success',
                   type: 'success',
                   duration: 800,
                   onClose: () => {
-                    window.localStorage['token'] = JSON.stringify(res.data.token)
+                    this.$store.commit('setToken', res.data.token)
+                    this.$store.commit('setUser', res.data.profile)
                     this.$router.push('/player')
                   }
                 })
