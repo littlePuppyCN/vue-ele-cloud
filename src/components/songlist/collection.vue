@@ -65,7 +65,7 @@ export default {
         })
     },
     handleDblClick(row) {
-      this.$emit('songName', row.name)
+      this.$emit('songName', row)
       req(`/song/url?id=${row.id}`)
         .then(res => {
           // const audio = new Audio()

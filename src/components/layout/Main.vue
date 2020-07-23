@@ -26,7 +26,8 @@
             <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
           </ul>
         </li>
-        {{ name }}
+
+        <li id="bottom">Now: {{ songIsActive.name }}</li>
 
       </ul>
     </aside>
@@ -50,7 +51,7 @@ export default {
         collect: false
       },
       listID: '',
-      name: ''
+      songIsActive: ''
     }
   },
   created() {
@@ -75,7 +76,7 @@ export default {
       this.$router.push('/collection')
     },
     handleName(v) {
-      this.name = v
+      this.songIsActive = v
     }
   }
 }
@@ -97,6 +98,7 @@ aside {
     width: 100%;
     height: 100%;
     list-style: none;
+    position: relative;
     li.out {
       height: 25px;
       line-height: 25px;
@@ -107,6 +109,17 @@ aside {
         margin-top: 8px;
         margin-right: 8px;
       }
+    }
+    #bottom{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      border-top: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      font-size: 12px;
     }
     li.in {
       height: 30px;

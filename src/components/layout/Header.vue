@@ -24,7 +24,7 @@
 
 <script>
 import req from '@/utils/request.js'
-
+import audio from '@/utils/audio.js'
 export default {
   methods: {
     logout() {
@@ -37,6 +37,7 @@ export default {
             onClose: () => {
               this.$store.commit('delToken')
               this.$store.commit('delUser')
+              audio.pause()
               this.$router.push('/')
             }
           })

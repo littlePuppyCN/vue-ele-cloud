@@ -10,15 +10,6 @@ yarn install
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 网易云后台 api
+地址：http://musicapi.leanapp.cn/
+GITHUB：https://github.com/Binaryify/NeteaseCloudMusicApi
