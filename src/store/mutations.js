@@ -14,6 +14,12 @@ const mutations = {
   delUser(state) {
     state.userInfo = ''
     localStorage.removeItem('ZY_USER_INFO')
+  },
+  play(state) {
+    state.isPlaying = true
+  },
+  pause(state) {
+    state.isPlaying = false
   }
 }
 

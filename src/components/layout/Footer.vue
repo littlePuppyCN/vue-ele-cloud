@@ -1,8 +1,8 @@
 <template>
   <footer>
     <div class="button">
-      <i v-show="!playing" class="el-icon-video-play" @click="playing = true" />
-      <i v-show="playing" class="el-icon-video-pause" @click="playing = false" />
+      <i v-show="!$store.getters.isPlay" class="el-icon-video-play" @click="playing = true" />
+      <i v-show="$store.getters.isPlay" class="el-icon-video-pause" @click="playing = false" />
       <i class="el-icon-right" style="margin-left:10px;" />
     </div>
     <div class="progress">2</div>

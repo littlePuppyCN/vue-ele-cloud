@@ -19,6 +19,12 @@ const getters = {
       return true
     }
     return false
+  },
+  isPlay(state) {
+    if (state.isPlaying) {
+      return true
+    }
+    return false
   }
 }
 

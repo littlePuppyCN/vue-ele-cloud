@@ -70,6 +70,7 @@ export default {
           const audio = new Audio()
           audio.src = res.data.data[0].url
           audio.play()
+          this.$store.commit('play')
         })
     }
   }
