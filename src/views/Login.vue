@@ -42,6 +42,7 @@
 <script>
 import req from '@/utils/request.js'
 export default {
+  name: 'Login',
   data() {
     return {
       dialogFormVisible: false,

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import store from '@/store/index.js'
 Vue.use(VueRouter)
 
 const originalPush = VueRouter.prototype.push
@@ -34,6 +34,22 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (store.getters.isLogin) {
+    if (to.path === '/login') {
+      next('Player')
+    } else {
+      next()
+    }
+  } else {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+  }
 })
 
 export default router

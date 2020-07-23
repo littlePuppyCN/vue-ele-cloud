@@ -1,7 +1,7 @@
 <template>
   <div id="header_wrap">
     <div class="left">
-      <div class="name">ZYPLAYER</div>
+      <div class="name">PLR</div>
     </div>
     <div class="right">
       <div class="userinfo">
@@ -31,7 +31,7 @@ export default {
       req('/logout').then(res => {
         if (res.data.code === 200) {
           this.$message({
-            message: 'create success',
+            message: 'logout success',
             type: 'success',
             duration: 800,
             onClose: () => {

@@ -3,6 +3,7 @@
     <div id="player">
       <HEADER />
       <MAIN />
+      <FOOTER />
     </div>
   </div>
 </template>
@@ -10,10 +11,13 @@
 <script>
 import HEADER from '@/components/layout/Header'
 import MAIN from '@/components/layout/Main'
+import FOOTER from '@/components/layout/Footer'
 export default {
+  name: 'Player',
   components: {
     HEADER,
-    MAIN
+    MAIN,
+    FOOTER
   }
 }
 </script>

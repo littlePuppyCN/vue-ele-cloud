@@ -11,7 +11,7 @@
           <i v-show="!listIsActive.mine" class="el-icon-arrow-right" />
           <i v-show="listIsActive.mine" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.mine">
-            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
+            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongListID(i.id)">{{ index === 0? 'my music' : i.name }}</li>
           </ul>
         </li>
         <li
@@ -119,7 +119,8 @@ aside {
 }
 
 #view{
-    flex: 1;
+    // flex: 1;
+    width: 650px;
     height: 100%;
 }
 .height_auto {
