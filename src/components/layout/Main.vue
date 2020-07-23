@@ -5,29 +5,33 @@
         <li
           class="out"
           :class="{'height_auto':listIsActive.mine}"
-          @click="listIsActive.mine ? listIsActive.mine = false : listIsActive.mine = true"
+          @click.self="listIsActive.mine ? listIsActive.mine = false : listIsActive.mine = true"
         >
           created list
           <i v-show="!listIsActive.mine" class="el-icon-arrow-right" />
           <i v-show="listIsActive.mine" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.mine">
-            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongList(i.id)">{{ i.name }}</li>
+            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
           </ul>
         </li>
         <li
           class="out"
           :class="{'height_auto':listIsActive.collect}"
-          @click="listIsActive.collect ? listIsActive.collect = false : listIsActive.collect = true"
+          @click.self="listIsActive.collect ? listIsActive.collect = false : listIsActive.collect = true"
         >
           collect list
           <i v-show="!listIsActive.collect" class="el-icon-arrow-right" />
           <i v-show="listIsActive.collect" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.collect">
-            <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongList(i.id)">{{ i.name }}</li>
+            <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
           </ul>
         </li>
       </ul>
     </aside>
+
+    <div id="view">
+      <router-view :id="listID" />
+    </div>
   </div>
 </template>
 
@@ -42,18 +46,18 @@ export default {
       listIsActive: {
         mine: false,
         collect: false
-      }
+      },
+      listID: ''
     }
   },
   created() {
     this.getUserList()
   },
+
   methods: {
     getUserList() {
       req(`/user/playlist?uid=${this.$store.getters.getUser.userId}`).then(
         res => {
-          console.log(res)
-
           this.songList = res.data.playlist.filter(item => {
             return !item.subscribed
           })
@@ -63,11 +67,9 @@ export default {
         }
       )
     },
-    getSongList(id) {
-      req(`/playlist/detail?id=${id}`)
-        .then(res => {
-          console.log(res)
-        })
+    getSongListID(id) {
+      this.listID = id
+      this.$router.push('/collection')
     }
   }
 }
@@ -78,6 +80,7 @@ export default {
   width: 100%;
   height: calc(100% - 90px);
   background: rgba(0, 0, 0, 0.1);
+  display: flex;
 }
 aside {
   width: 150px;
@@ -113,6 +116,11 @@ aside {
         opacity: 0.6;
     }
   }
+}
+
+#view{
+    flex: 1;
+    height: 100%;
 }
 .height_auto {
   height: auto !important;
