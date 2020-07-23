@@ -1,8 +1,8 @@
 <template>
   <footer>
     <div class="button">
-      <i v-show="!$store.getters.isPlay" class="el-icon-video-play" @click="playing = true" />
-      <i v-show="$store.getters.isPlay" class="el-icon-video-pause" @click="playing = false" />
+      <i v-show="!$store.getters.isPlay" class="el-icon-video-play" @click="handlePlay" />
+      <i v-show="$store.getters.isPlay" class="el-icon-video-pause" @click="handlePlay" />
       <i class="el-icon-right" style="margin-left:10px;" />
     </div>
     <div class="progress">2</div>
@@ -11,10 +11,22 @@
 </template>
 
 <script>
+import audio from '@/utils/audio.js'
 export default {
   data() {
     return {
       playing: false
+    }
+  },
+  methods: {
+    handlePlay() {
+      if (this.$store.getters.isPlay) {
+        audio.pause()
+        this.$store.commit('pause')
+      } else {
+        audio.play()
+        this.$store.commit('play')
+      }
     }
   }
 }

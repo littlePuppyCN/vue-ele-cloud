@@ -26,11 +26,13 @@
             <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
           </ul>
         </li>
+        {{ name }}
+
       </ul>
     </aside>
 
     <div id="view">
-      <router-view :id="listID" />
+      <router-view :id="listID" @songName="handleName" />
     </div>
   </div>
 </template>
@@ -47,7 +49,8 @@ export default {
         mine: false,
         collect: false
       },
-      listID: ''
+      listID: '',
+      name: ''
     }
   },
   created() {
@@ -70,6 +73,9 @@ export default {
     getSongListID(id) {
       this.listID = id
       this.$router.push('/collection')
+    },
+    handleName(v) {
+      this.name = v
     }
   }
 }

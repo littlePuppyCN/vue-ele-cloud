@@ -39,7 +39,7 @@
 
 <script>
 import req from '@/utils/request.js'
-
+import audio from '@/utils/audio.js'
 export default {
   name: 'Collection',
   props: ['id'],
@@ -65,11 +65,14 @@ export default {
         })
     },
     handleDblClick(row) {
+      this.$emit('songName', row.name)
       req(`/song/url?id=${row.id}`)
         .then(res => {
-          const audio = new Audio()
-          audio.src = res.data.data[0].url
-          audio.play()
+          // const audio = new Audio()
+          // audio.src = res.data.data[0].url
+          // audio.play()
+          console.log(res)
+          audio.play(res.data.data[0].url)
           this.$store.commit('play')
         })
     }
