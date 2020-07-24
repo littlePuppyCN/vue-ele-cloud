@@ -23,6 +23,7 @@ const mutations = {
   },
   activeSong(state, song) {
     state.activeSong = song
+    localStorage.setItem('ACTIVE_SONG', JSON.stringify(song))
   }
 }
 

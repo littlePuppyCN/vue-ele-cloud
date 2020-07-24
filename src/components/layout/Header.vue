@@ -40,6 +40,7 @@ export default {
             onClose: () => {
               this.$store.commit('delToken')
               this.$store.commit('delUser')
+              this.$store.commit('pause')
               audio.pause()
               this.$router.push('/')
             }

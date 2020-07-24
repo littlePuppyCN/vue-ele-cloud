@@ -91,12 +91,11 @@ export default {
         })
     },
     ifEnded(url, t) {
-      var newArr = this.collectList.filter((i) => {
-        return i.id === t.id
-      })
-      this.$store.commit('activeSong', newArr[0])
-
       audio.song.addEventListener('ended', () => {
+        var newArr = this.collectList.filter((i) => {
+          return i.id === t.id
+        })
+        this.$store.commit('activeSong', newArr[0])
         audio.play(url)
       }, false)
     }
