@@ -25,6 +25,9 @@ const getters = {
       return true
     }
     return false
+  },
+  getActiveSong(state) {
+    return state.activeSong
   }
 }
 

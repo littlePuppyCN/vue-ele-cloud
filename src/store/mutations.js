@@ -20,6 +20,9 @@ const mutations = {
   },
   pause(state) {
     state.isPlaying = false
+  },
+  activeSong(state, song) {
+    state.activeSong = song
   }
 }
 

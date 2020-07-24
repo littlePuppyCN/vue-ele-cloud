@@ -27,14 +27,14 @@
           </ul>
         </li>
 
-        <li id="bottom" @click="pushToLyric()">Now: {{ songIsActive.name }}</li>
+        <li id="bottom" @click="pushToLyric()">Now: {{ this.$store.getters.getActiveSong.name }}</li>
 
       </ul>
     </aside>
 
     <div id="view">
       <transition name="bounce">
-        <router-view :id="listID" :song-is-playing="songIsActive.id" @songName="handleName" />
+        <router-view :id="listID" />
       </transition>
     </div>
   </div>
@@ -56,10 +56,18 @@ export default {
       songIsActive: ''
     }
   },
+  // watch: {
+  //   songIsActive: {
+  //     handler(val, old) {
+  //       console.log(val.name, old.name)
+  //       this.songIsActive.name = val.name
+  //     },
+  //     deep: true
+  //   }
+  // },
   created() {
     this.getUserList()
   },
-
   methods: {
     getUserList() {
       req(`/user/playlist?uid=${this.$store.getters.getUser.userId}`).then(
@@ -97,7 +105,7 @@ export default {
 aside {
   width: 150px;
   height: 100%;
-  border-right: 1px solid #ccc;
+  // border-right: 1px solid #ccc;
   user-select: none;
   ul {
     width: 100%;

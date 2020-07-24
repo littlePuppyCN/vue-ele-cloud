@@ -134,7 +134,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  opacity: 0.2;
+  // opacity: 0.2;
   #from{
     margin: auto;
   }
