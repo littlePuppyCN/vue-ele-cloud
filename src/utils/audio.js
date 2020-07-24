@@ -1,25 +1,31 @@
+var Play = function() {
+  this.song = new Audio()
+}
 
-const audio = {
-  music: new Audio(),
-  curSrc: '',
-  play: function(src) {
-    // 如果有src就暂停
-    if (this.music.src) {
-      this.music.pause()
-    }
-    // 如果当前是暂停 就把src赋值给当前的暂停路径
-    if (this.curSrc !== '') {
-      this.music.src = this.curSrc
-      this.curSrc = ''
-    } else {
-      this.music.src = src
-    }
-    this.music.play()
-  },
-  pause: function() {
-    this.curSrc = this.music.src
-    this.music.pause()
+Play.prototype.play = function(src) {
+  if (src) {
+    this.song.src = src
+    this.song.play()
+  } else {
+    this.song.play()
   }
 }
 
-export default audio
+Play.prototype.pause = function() {
+  this.song.pause()
+}
+
+Play.prototype.isEnded = function() {
+  return this.song.ended
+}
+
+Play.prototype.volume = function(v) {
+  this.song.volume = v
+}
+
+const music = new Play()
+music.song.addEventListener('ended', function() {
+  console.log('music is ended')
+}, false)
+
+export default music

@@ -27,13 +27,15 @@
           </ul>
         </li>
 
-        <li id="bottom">Now: {{ songIsActive.name }}</li>
+        <li id="bottom" @click="pushToLyric()">Now: {{ songIsActive.name }}</li>
 
       </ul>
     </aside>
 
     <div id="view">
-      <router-view :id="listID" @songName="handleName" />
+      <transition name="bounce">
+        <router-view :id="listID" :song-is-playing="songIsActive.id" @songName="handleName" />
+      </transition>
     </div>
   </div>
 </template>
@@ -77,6 +79,9 @@ export default {
     },
     handleName(v) {
       this.songIsActive = v
+    },
+    pushToLyric() {
+      this.$router.push('/lyric')
     }
   }
 }

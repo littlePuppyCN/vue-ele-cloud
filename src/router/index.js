@@ -27,6 +27,11 @@ const routes = [
         path: '/collection',
         name: 'Collection',
         component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/collection.vue')
+      },
+      {
+        path: '/lyric',
+        name: 'Lyric',
+        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/lyric.vue')
       }
     ]
   }

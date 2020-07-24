@@ -68,10 +68,6 @@ export default {
       this.$emit('songName', row)
       req(`/song/url?id=${row.id}`)
         .then(res => {
-          // const audio = new Audio()
-          // audio.src = res.data.data[0].url
-          // audio.play()
-          console.log(res)
           audio.play(res.data.data[0].url)
           this.$store.commit('play')
         })
