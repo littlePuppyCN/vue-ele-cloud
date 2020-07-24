@@ -2,6 +2,9 @@
   <div id="header_wrap">
     <div class="left">
       <div class="name">PLR</div>
+      <div class="search_wrap">
+        <input type="text" class="search">
+      </div>
     </div>
     <div class="right">
       <div class="userinfo">
@@ -58,6 +61,18 @@ export default {
     box-sizing: border-box;
     .left{
         flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        .search{
+          width: 200px;
+          height: 24px;
+          border-radius: 10px;
+          outline: none;
+          border: none;
+          background: rgba(0,0,0,0.1);
+          text-indent: 20px;
+        }
         .name{
             margin-left: 10px;
         }
@@ -65,6 +80,7 @@ export default {
     .right{
         flex: 1;
         display: flex;
+        justify-content: flex-end;
         .el-dropdown-link{
             display: flex;
             align-items: center;

@@ -37,9 +37,9 @@ export default {
       }
     },
     handleVolume() {
-      // audio.volume(-0.5)
       this.$refs.vacalOut.onmousedown = (e) => {
         this.progress.left = e.offsetX
+        audio.volume(e.offsetX / 100)
       }
     }
   }

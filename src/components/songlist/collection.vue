@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       collectList: [],
-      idForUrl: ''
+      songId: []
     }
   },
   watch: {
@@ -62,14 +62,38 @@ export default {
       req(`/playlist/detail?id=${id}`)
         .then(res => {
           this.collectList = res.data.playlist.tracks
+          var arr = res.data.privileges
+          var emptyArr = []
+          for (var i = 0; i < arr.length; i++) {
+            emptyArr.push(arr[i].id)
+          }
+          this.songId = emptyArr.join(',')
         })
     },
     handleDblClick(row) {
       this.$emit('songName', row)
-      req(`/song/url?id=${row.id}`)
+      req(`/song/url?id=${this.songId}`)
         .then(res => {
-          audio.play(res.data.data[0].url)
+          var urls = res.data.data
+          var currentSong = []
+          var currentIndex = null
+          // var currentSong = urls.filter((item) => {
+          //   return item.id === row.id
+          // })
+          for (var i = 0; i < urls.length; i++) {
+            if (urls[i].id === row.id) {
+              currentSong = urls[i]
+              currentIndex = i
+            }
+          }
+          console.log(currentSong)
+          console.log(currentIndex)
+          audio.play(currentSong.url)
           this.$store.commit('play')
+          audio.song.addEventListener('ended', function() {
+            console.log(1)
+            audio.play(urls[currentIndex + 1].url)
+          }, false)
         })
     }
   }
