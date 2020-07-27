@@ -12,7 +12,7 @@
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <span class="userImg">
-              <img :src="$store.getters.getUser.avatarUrl?$store.getters.getUser.avatarUrl:''" alt="">
+              <img :src="$store.getters.getUser.avatarUrl">
             </span>
             {{ $store.getters.getUser.nickname }}
             <i class="el-icon-arrow-down el-icon--right" />

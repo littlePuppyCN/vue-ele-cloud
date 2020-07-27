@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import req from '@/utils/request.js'
 export default {
   name: 'Input',
   props: ['result'],
@@ -72,13 +73,32 @@ export default {
       }
     }
   },
+  mounted() {
+    console.log(this.result)
+  },
   methods: {
     handleLike(val) {
-      if (this.ifExist(val.id)) {
-        var index = this.colorSelected.indexOf(val.id)
-        this.colorSelected.splice(index, 1)
-      } else {
-        this.colorSelected.push(val.id)
+      if (this.ifExist(val.id)) { // 已经收藏
+        req(`/playlist/tracks/?op=del&pid=907245145&tracks=${val.id}`)
+          .then(res => {
+            if (res.data.code === 200) {
+              var index = this.colorSelected.indexOf(val.id)
+              this.colorSelected.splice(index, 1)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else { // 未收藏
+        req(`/playlist/tracks/?op=add&pid=907245145&tracks=${val.id}`)
+          .then(res => {
+            if (res.data.code === 200) {
+              this.colorSelected.push(val.id)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     }
   }

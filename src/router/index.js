@@ -21,6 +21,7 @@ const routes = [
   {
     path: '/player',
     name: 'Player',
+    redirect: '/input',
     component: () => import('../views/Player.vue'),
     children: [
       {
