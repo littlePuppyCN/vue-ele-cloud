@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const state = {
   userToken: '',
   userInfo: '',
-  isPlaying: false
+  isPlaying: false,
+  activeSong: ''
 }
 export default new Vuex.Store({
   state,

@@ -63,7 +63,7 @@ export default {
         .then(res => {
           console.log(res)
           this.collectList = res.data.playlist.tracks
-          var arr = res.data.privileges
+          var arr = res.data.playlist.trackIds
           var emptyArr = []
           for (var i = 0; i < arr.length; i++) {
             emptyArr.push(arr[i].id)
@@ -72,15 +72,13 @@ export default {
         })
     },
     handleDblClick(row) {
-      this.$emit('songName', row)
+      this.$store.commit('activeSong', row)
       req(`/song/url?id=${this.songId}`)
         .then(res => {
           var urls = res.data.data
           var currentSong = []
           var currentIndex = null
-          // var currentSong = urls.filter((item) => {
-          //   return item.id === row.id
-          // })
+
           for (var i = 0; i < urls.length; i++) {
             if (urls[i].id === row.id) {
               currentSong = urls[i]
@@ -89,11 +87,18 @@ export default {
           }
 
           audio.play(currentSong.url)
+          this.ifEnded(urls[currentIndex + 1].url, urls[currentIndex + 1])
           this.$store.commit('play')
-          audio.song.addEventListener('ended', function() {
-            audio.play(urls[currentIndex + 1].url)
-          }, false)
         })
+    },
+    ifEnded(url, t) {
+      audio.song.addEventListener('ended', () => {
+        var newArr = this.collectList.filter((i) => {
+          return i.id === t.id
+        })
+        this.$store.commit('activeSong', newArr[0])
+        audio.play(url)
+      }, false)
     }
   }
 }

@@ -20,6 +20,10 @@ const mutations = {
   },
   pause(state) {
     state.isPlaying = false
+  },
+  activeSong(state, song) {
+    state.activeSong = song
+    localStorage.setItem('ACTIVE_SONG', JSON.stringify(song))
   }
 }
 

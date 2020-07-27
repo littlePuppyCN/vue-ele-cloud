@@ -9,7 +9,6 @@ import req from '@/utils/request.js'
 
 export default {
   name: 'Lyric',
-  props: ['songIsPlaying'],
   data() {
     return {
       lyric: ''
@@ -20,7 +19,7 @@ export default {
   },
   methods: {
     getSongLyric() {
-      req(`/lyric?id=${this.songIsPlaying}`)
+      req(`/lyric?id=${this.$store.getters.getActiveSong.id}`)
         .then(res => {
           this.lyric = res.data.lrc.lyric
         })

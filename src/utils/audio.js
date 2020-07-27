@@ -24,8 +24,5 @@ Play.prototype.volume = function(v) {
 }
 
 const music = new Play()
-// music.song.addEventListener('ended', function() {
-//   music.play()
-// }, false)
 
 export default music
