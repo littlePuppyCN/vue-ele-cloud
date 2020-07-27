@@ -11,7 +11,7 @@
           <i v-show="!listIsActive.mine" class="el-icon-arrow-right" />
           <i v-show="listIsActive.mine" class="el-icon-arrow-down" />
           <ul v-show="listIsActive.mine">
-            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongListID(i.id)">{{ index === 0? 'my music' : i.name }}</li>
+            <li v-for="(i,index) in songList" :key="index" class="in" @click="getSongListID(i.id)">{{ index === 0? '我喜欢的音乐' : i.name }}</li>
           </ul>
         </li>
         <li
@@ -34,7 +34,7 @@
 
     <div id="view">
       <transition name="bounce">
-        <router-view :id="listID" :song-is-playing="songIsActive.id" @songName="handleName" />
+        <router-view :id="listID" :result="searchRes" :song-is-playing="songIsActive.id" @songName="handleName" />
       </transition>
     </div>
   </div>
@@ -42,7 +42,7 @@
 
 <script>
 import req from '@/utils/request.js'
-
+import bus from '@/utils/eventBus.js'
 export default {
   data() {
     return {
@@ -53,11 +53,15 @@ export default {
         collect: false
       },
       listID: '',
-      songIsActive: ''
+      songIsActive: '',
+      searchRes: []
     }
   },
   created() {
     this.getUserList()
+    bus.$on('res', (val) => {
+      this.searchRes = val
+    })
   },
 
   methods: {

@@ -32,6 +32,11 @@ const routes = [
         path: '/lyric',
         name: 'Lyric',
         component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/lyric.vue')
+      },
+      {
+        path: '/input',
+        name: 'Input',
+        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/input.vue')
       }
     ]
   }

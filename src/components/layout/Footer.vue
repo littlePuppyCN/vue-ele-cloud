@@ -70,6 +70,7 @@ export default {
             border-radius: 4px;
             background: rgba(0,0,0,.3);
             position: relative;
+            cursor: pointer;
             .inner{
               position: absolute;
               left: 0;

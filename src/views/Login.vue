@@ -74,7 +74,6 @@ export default {
         if (valid) {
           req(`/login/cellphone?phone=${this.ruleForm.phone}&password=${this.ruleForm.password}`)
             .then((res) => {
-              console.log(res)
               if (res.data.code === 200) {
                 this.$message({
                   message: 'create success',

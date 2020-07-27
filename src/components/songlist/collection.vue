@@ -61,6 +61,7 @@ export default {
     getSongList(id) {
       req(`/playlist/detail?id=${id}`)
         .then(res => {
+          console.log(res)
           this.collectList = res.data.playlist.tracks
           var arr = res.data.privileges
           var emptyArr = []
@@ -86,12 +87,10 @@ export default {
               currentIndex = i
             }
           }
-          console.log(currentSong)
-          console.log(currentIndex)
+
           audio.play(currentSong.url)
           this.$store.commit('play')
           audio.song.addEventListener('ended', function() {
-            console.log(1)
             audio.play(urls[currentIndex + 1].url)
           }, false)
         })
