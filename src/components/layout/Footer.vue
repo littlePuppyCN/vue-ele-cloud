@@ -9,7 +9,7 @@
     <div class="progress">2</div>
     <div class="vocal">
       <i class="el-icon-headset" />
-      <div ref="vacalOut" class="vacalProgress" @click="handleVolume">
+      <div ref="vacalOut" class="vacalProgress" @click="handleVolume($event)">
         <div ref="vacalIn" :style="{'width':progress.left + 'px'}" class="inner" />
       </div>
     </div></footer>
@@ -36,11 +36,10 @@ export default {
         this.$store.commit('play')
       }
     },
-    handleVolume() {
-      this.$refs.vacalOut.onmousedown = (e) => {
-        this.progress.left = e.offsetX
-        audio.volume(e.offsetX / 100)
-      }
+    handleVolume(e) {
+      this.progress.left = e.offsetX
+      e.offsetX > 50 ? e.offsetX + 50 : e.offsetX - 50
+      audio.volume(e.offsetX / 100)
     }
   }
 }

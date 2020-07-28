@@ -9,8 +9,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.prototype.$http = http
 Vue.prototype.$time = function(mss) {
-  // var days = parseInt(mss / (1000 * 60 * 60 * 24))
-  // var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
   var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60))
   var seconds = parseInt((mss % (1000 * 60)) / 1000)
   minutes < 10 ? '0' + minutes : minutes

@@ -74,7 +74,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.result)
   },
   methods: {
     handleLike(val) {

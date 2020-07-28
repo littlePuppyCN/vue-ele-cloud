@@ -30,7 +30,7 @@
         width="120"
       />
       <el-table-column
-        prop="mst"
+        prop="dt"
         label="Time"
       />
     </el-table>
@@ -46,7 +46,8 @@ export default {
   data() {
     return {
       collectList: [],
-      songId: []
+      songId: [],
+      songUrls: []
     }
   },
   watch: {
@@ -55,14 +56,16 @@ export default {
     }
   },
   created() {
-    this.getSongList(this.id)
+    // this.getSongList(this.id)
   },
   methods: {
     getSongList(id) {
       req(`/playlist/detail?id=${id}`)
         .then(res => {
-          console.log(res)
           this.collectList = res.data.playlist.tracks
+          this.collectList.forEach((i, idx) => {
+            i.dt = this.$time(i.dt)
+          })
           var arr = res.data.playlist.trackIds
           var emptyArr = []
           for (var i = 0; i < arr.length; i++) {
@@ -75,29 +78,28 @@ export default {
       this.$store.commit('activeSong', row)
       req(`/song/url?id=${this.songId}`)
         .then(res => {
-          var urls = res.data.data
-          var currentSong = []
-          var currentIndex = null
-
-          for (var i = 0; i < urls.length; i++) {
-            if (urls[i].id === row.id) {
-              currentSong = urls[i]
-              currentIndex = i
-            }
-          }
-
-          audio.play(currentSong.url)
-          this.ifEnded(urls[currentIndex + 1].url, urls[currentIndex + 1])
+          this.songUrls = res.data.data
+          audio.play(this.getCurrentSong(row))
+          this.ifEnded()
           this.$store.commit('play')
         })
     },
-    ifEnded(url, t) {
+    getCurrentSong(target) {
+      for (var i = 0; i < this.songUrls.length; i++) {
+        if (this.songUrls[i].id === target.id) {
+          return this.songUrls[i].url
+        }
+      }
+    },
+    ifEnded() {
+      var random
       audio.song.addEventListener('ended', () => {
+        random = Math.floor(Math.random() * this.songUrls.length)
         var newArr = this.collectList.filter((i) => {
-          return i.id === t.id
+          return i.id === this.songUrls[random].id
         })
         this.$store.commit('activeSong', newArr[0])
-        audio.play(url)
+        audio.play(this.songUrls[random].url)
       }, false)
     }
   }

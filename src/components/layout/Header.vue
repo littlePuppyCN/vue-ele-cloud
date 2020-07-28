@@ -14,7 +14,7 @@
             <span class="userImg">
               <img :src="$store.getters.getUser.avatarUrl">
             </span>
-            {{ $store.getters.getUser.nickname }}
+            {{ $store.getters.getUser.nickname?$store.getters.getUser.nickname: '' }}
             <i class="el-icon-arrow-down el-icon--right" />
           </span>
           <el-dropdown-menu slot="dropdown">

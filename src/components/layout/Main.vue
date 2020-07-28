@@ -27,7 +27,7 @@
           </ul>
         </li>
 
-        <li id="bottom" @click="pushToLyric()">Now: {{ this.$store.getters.getActiveSong.name }}</li>
+        <li id="bottom" @click="pushToLyric()">Now: {{ $store.getters.getActiveSong?$store.getters.getActiveSong.name : '' }}</li>
 
       </ul>
     </aside>
@@ -53,7 +53,6 @@ export default {
         collect: false
       },
       listID: '',
-      songIsActive: '',
       searchRes: []
     }
   },

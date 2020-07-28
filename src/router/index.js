@@ -55,11 +55,12 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if (to.path === '/login') {
-      next()
-    } else {
-      next('/login')
-    }
+    next()
+    // if (to.path === '/login') {
+    //   next()
+    // } else {
+    //   next('/login')
+    // }
   }
 })
 
