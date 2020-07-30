@@ -56,29 +56,41 @@ export default {
     }
   },
   created() {
-    // this.getSongList(this.id)
+    this.getSongList(this.id)
   },
   methods: {
     getSongList(id) {
-      req(`/playlist/detail?id=${id}`)
-        .then(res => {
-          this.collectList = res.data.playlist.tracks
-          this.collectList.forEach((i, idx) => {
-            i.dt = this.$time(i.dt)
+      if (this.id) {
+        req(`/playlist/detail?id=${id}`)
+          .then(res => {
+            this.collectList = res.data.playlist.tracks
+            this.$store.commit('curSongList', res.data.playlist.tracks)
+            this.collectList.forEach((i, idx) => {
+              i.dt = this.$time(i.dt)
+            })
+            var arr
+            if (res.data.playlist.subscribed) {
+              arr = res.data.playlist.tracks
+            } else {
+              arr = res.data.playlist.trackIds
+            }
+            var emptyArr = []
+            for (var i = 0; i < arr.length; i++) {
+              emptyArr.push(arr[i].id)
+            }
+            this.songId = emptyArr.join(',')
           })
-          var arr = res.data.playlist.trackIds
-          var emptyArr = []
-          for (var i = 0; i < arr.length; i++) {
-            emptyArr.push(arr[i].id)
-          }
-          this.songId = emptyArr.join(',')
-        })
+      } else {
+        console.log('first')
+        return
+      }
     },
     handleDblClick(row) {
       this.$store.commit('activeSong', row)
       req(`/song/url?id=${this.songId}`)
         .then(res => {
           this.songUrls = res.data.data
+          window.localStorage.setItem('SONG_URLS', JSON.stringify(this.songUrls))
           audio.play(this.getCurrentSong(row))
           this.ifEnded()
           this.$store.commit('play')

@@ -60,6 +60,10 @@ export default {
               this.$store.commit('pause')
               audio.pause()
               this.$router.push('/')
+              var key = Object.keys(localStorage)
+              key.forEach(i => {
+                localStorage.removeItem(i)
+              })
             }
           })
         }
@@ -120,7 +124,6 @@ export default {
                 width: 100%;
                 height: 100%;
                 display: block;
-
             }
         }
     }

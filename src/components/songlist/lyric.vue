@@ -1,5 +1,5 @@
 <template>
-  <div class="lyric" @keydown.enter="comIsShow = true">
+  <div class="lyric">
     <pre v-show="!commentIsActive" @click.stop.prevent="commentIsActive = true">{{ lyric?lyric:'纯音乐' }}</pre>
     <div v-show="commentIsActive" class="comments" @click.stop.prevent="commentIsActive = false">
       <ul class="hot">
@@ -15,10 +15,11 @@
       </ul>
 
     </div>
-    <el-input v-show="comIsShow" v-model="addCom" placeholder="put comments here" />
-    <i v-show="comIsShow" class="el-icon-search" @click="addComments" />
+    <!-- <el-input v-model="addCom" placeholder="put comments here" />
+    <i class="el-icon-search" @click="addComments" /> -->
 
   </div>
+
 </template>
 
 <script>
@@ -31,8 +32,8 @@ export default {
       lyric: '',
       commentIsActive: false,
       comments: [],
-      addCom: '',
-      comIsShow: false
+      addCom: ''
+
     }
   },
   created() {
@@ -49,9 +50,10 @@ export default {
         }
       })
     },
-    getSongComment() {
+    getSongComment(val) {
       req(`/comment/music?id=${this.$store.getters.getActiveSong.id}&limit=10`).then(
         (res) => {
+          console.log(res.data.comments[0].content)
           if (res.data.code === 200) {
             this.comments = res.data
           }
@@ -64,6 +66,7 @@ export default {
           console.log(res)
         })
     }
+
   }
 }
 </script>

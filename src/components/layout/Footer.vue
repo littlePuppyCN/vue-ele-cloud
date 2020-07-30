@@ -1,10 +1,10 @@
 <template>
   <footer>
     <div class="button">
-      <i class="el-icon-back" style="margin-right:10px;" />
+      <!-- <i class="el-icon-back" style="margin-right:10px;" /> -->
       <i v-show="!$store.getters.isPlay" class="el-icon-video-play" @click="handlePlay" />
       <i v-show="$store.getters.isPlay" class="el-icon-video-pause" @click="handlePlay" />
-      <i class="el-icon-right" style="margin-left:10px;" />
+      <i class="el-icon-right" style="margin-left:10px;" @click="next" />
     </div>
     <div class="progress">2</div>
     <div class="vocal">
@@ -40,6 +40,17 @@ export default {
       this.progress.left = e.offsetX
       e.offsetX > 50 ? e.offsetX + 50 : e.offsetX - 50
       audio.volume(e.offsetX / 100)
+    },
+    next() {
+      var cSong = this.$store.getters.getCurList
+      var urls = JSON.parse(localStorage.getItem('SONG_URLS'))
+      var random = Math.floor(Math.random() * urls.length)
+      for (var i = 0; i < cSong.length; i++) {
+        if (cSong[i].id === urls[random].id) {
+          this.$store.commit('activeSong', cSong[i])
+        }
+      }
+      audio.play(urls[random].url)
     }
   }
 }

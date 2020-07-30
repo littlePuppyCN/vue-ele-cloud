@@ -8,7 +8,8 @@ const state = {
   userToken: '',
   userInfo: '',
   isPlaying: false,
-  activeSong: ''
+  activeSong: '',
+  curSongList: ''
 }
 export default new Vuex.Store({
   state,

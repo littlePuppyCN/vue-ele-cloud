@@ -24,6 +24,10 @@ const mutations = {
   activeSong(state, song) {
     state.activeSong = song
     localStorage.setItem('ACTIVE_SONG', JSON.stringify(song))
+  },
+  curSongList(state, list) {
+    state.curSongList = list
+    localStorage.setItem('CUR_LIST', JSON.stringify(list))
   }
 }
 
