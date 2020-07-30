@@ -92,7 +92,6 @@ export default {
           this.songUrls = res.data.data
           window.localStorage.setItem('SONG_URLS', JSON.stringify(this.songUrls))
           audio.play(this.getCurrentSong(row))
-          this.ifEnded()
           this.$store.commit('play')
         })
     },
@@ -102,17 +101,6 @@ export default {
           return this.songUrls[i].url
         }
       }
-    },
-    ifEnded() {
-      var random
-      audio.song.addEventListener('ended', () => {
-        random = Math.floor(Math.random() * this.songUrls.length)
-        var newArr = this.collectList.filter((i) => {
-          return i.id === this.songUrls[random].id
-        })
-        this.$store.commit('activeSong', newArr[0])
-        audio.play(this.songUrls[random].url)
-      }, false)
     }
   }
 }

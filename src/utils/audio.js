@@ -1,3 +1,4 @@
+import store from '@/store'
 var Play = function() {
   this.song = new Audio()
 }
@@ -9,6 +10,7 @@ Play.prototype.play = function(src) {
   } else {
     this.song.play()
   }
+  this.isEnded()
 }
 
 Play.prototype.pause = function() {
@@ -16,7 +18,19 @@ Play.prototype.pause = function() {
 }
 
 Play.prototype.isEnded = function() {
-  return this.song.ended
+  var random
+  var urls = JSON.parse(localStorage.getItem('SONG_URLS'))
+  var curList = store.getters.getCurList
+
+  this.song.addEventListener('ended', () => {
+    random = Math.floor(Math.random() * urls.length)
+    var newArr = curList.filter((i) => {
+      return i.id === urls[random].id
+    })
+    store.commit('activeSong', newArr[0])
+
+    this.play(urls[random].url)
+  })
 }
 
 Play.prototype.volume = function(v) {

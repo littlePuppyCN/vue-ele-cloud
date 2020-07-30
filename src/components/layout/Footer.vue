@@ -27,6 +27,7 @@ export default {
     }
   },
   methods: {
+
     handlePlay() {
       if (this.$store.getters.isPlay) {
         audio.pause()

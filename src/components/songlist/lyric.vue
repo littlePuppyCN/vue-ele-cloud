@@ -53,7 +53,6 @@ export default {
     getSongComment(val) {
       req(`/comment/music?id=${this.$store.getters.getActiveSong.id}&limit=10`).then(
         (res) => {
-          console.log(res.data.comments[0].content)
           if (res.data.code === 200) {
             this.comments = res.data
           }
