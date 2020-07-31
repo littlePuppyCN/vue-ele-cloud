@@ -26,7 +26,7 @@
             <li v-for="(i,index) in collectList" :key="index" class="in" @click="getSongListID(i.id)">{{ i.name }}</li>
           </ul>
         </li>
-
+        <li class="out" @click="$router.push('/personal')">FM</li>
         <li id="bottom" @click="pushToLyric">Now: {{ $store.getters.getActiveSong?$store.getters.getActiveSong.name : '' }}</li>
 
       </ul>
@@ -110,6 +110,7 @@ aside {
   height: 100%;
   // border-right: 1px solid #ccc;
   user-select: none;
+
   ul {
     width: 100%;
     height: 100%;
@@ -126,6 +127,7 @@ aside {
         margin-right: 8px;
       }
     }
+
     #bottom{
       position: absolute;
       bottom: 0;

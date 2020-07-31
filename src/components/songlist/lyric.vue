@@ -33,7 +33,12 @@ export default {
       commentIsActive: false,
       comments: [],
       addCom: ''
-
+    }
+  },
+  watch: {
+    '$store.state.activeSong'(val) {
+      this.getSongLyric()
+      this.getSongComment()
     }
   },
   created() {

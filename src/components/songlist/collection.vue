@@ -1,7 +1,7 @@
 <template>
   <div id="collection">
     <el-table
-      :data="collectList"
+      :data="list"
       border
       height="100%"
       style="width: 100%"
@@ -50,6 +50,14 @@ export default {
       songUrls: []
     }
   },
+  computed: {
+    list() {
+      this.collectList.forEach((i, idx) => {
+        i.dt = this.$time(i.dt)
+      })
+      return this.collectList
+    }
+  },
   watch: {
     id: function(val, old) {
       this.getSongList(val)
@@ -65,25 +73,25 @@ export default {
           .then(res => {
             this.collectList = res.data.playlist.tracks
             this.$store.commit('curSongList', res.data.playlist.tracks)
-            this.collectList.forEach((i, idx) => {
-              i.dt = this.$time(i.dt)
-            })
-            var arr
-            if (res.data.playlist.subscribed) {
-              arr = res.data.playlist.tracks
-            } else {
-              arr = res.data.playlist.trackIds
-            }
-            var emptyArr = []
-            for (var i = 0; i < arr.length; i++) {
-              emptyArr.push(arr[i].id)
-            }
-            this.songId = emptyArr.join(',')
+            this.getSongId(res)
           })
       } else {
         console.log('first')
         return
       }
+    },
+    getSongId(res) {
+      var arr
+      var emptyArr = []
+      if (res.data.playlist.subscribed) {
+        arr = res.data.playlist.tracks
+      } else {
+        arr = res.data.playlist.trackIds
+      }
+      for (var i = 0; i < arr.length; i++) {
+        emptyArr.push(arr[i].id)
+      }
+      this.songId = emptyArr.join(',')
     },
     handleDblClick(row) {
       this.$store.commit('activeSong', row)

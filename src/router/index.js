@@ -38,6 +38,11 @@ const routes = [
         path: '/input',
         name: 'Input',
         component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/input.vue')
+      },
+      {
+        path: '/personal',
+        name: 'Personal',
+        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/personal.vue')
       }
     ]
   }

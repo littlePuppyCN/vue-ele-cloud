@@ -6,9 +6,13 @@ var Play = function() {
 Play.prototype.play = function(src) {
   if (src) {
     this.song.src = src
-    this.song.play()
+    setTimeout(() => {
+      this.song.play()
+    }, 150)
   } else {
-    this.song.play()
+    setTimeout(() => {
+      this.song.play()
+    }, 150)
   }
   this.isEnded()
 }
