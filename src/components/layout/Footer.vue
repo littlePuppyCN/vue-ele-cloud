@@ -6,7 +6,11 @@
       <i v-show="$store.getters.isPlay" class="el-icon-video-pause" @click="handlePlay" />
       <i class="el-icon-right" style="margin-left:10px;" @click="next" />
     </div>
-    <div class="progress">2</div>
+    <div class="progress">
+      <div class="out" @click="handleDur($event)">
+        <div class="in" :style="{'width':progress.width + 'px'}" />
+      </div>
+    </div>
     <div class="vocal">
       <i class="el-icon-headset" />
       <div ref="vacalOut" class="vacalProgress" @click="handleVolume($event)">
@@ -22,12 +26,32 @@ export default {
     return {
       playing: false,
       progress: {
-        left: ''
+        left: '',
+        width: ''
       }
     }
   },
+  mounted() {
+    this.handleProgress()
+  },
   methods: {
+    handleDur(e) {
+      this.progress.width = e.offsetX
+      var val = (e.offsetX / 100 / 3).toFixed(2)
 
+      audio.duration(val)
+    },
+    handleProgress() {
+      var _this = this
+      audio.song.addEventListener('timeupdate', function() {
+        var cur_time
+        var per
+        var dur = this.duration.toFixed(2)
+        cur_time = this.currentTime.toFixed(2)
+        per = cur_time / dur * 100 * 3
+        _this.progress.width = per
+      })
+    },
     handlePlay() {
       if (this.$store.getters.isPlay) {
         audio.pause()
@@ -39,7 +63,7 @@ export default {
     },
     handleVolume(e) {
       this.progress.left = e.offsetX
-      e.offsetX > 50 ? e.offsetX + 50 : e.offsetX - 50
+      e.offsetX > 50 ? e.offsetX + 100 : e.offsetX - 100
       audio.volume(e.offsetX / 100)
     },
     next() {
@@ -70,6 +94,24 @@ export default {
         }
         .progress{
           flex: 3;
+          .out{
+            width: 300px;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(0,0,0,.3);
+            position: relative;
+            .in{
+              position: absolute;
+              left: 0;
+              right: 10px;
+              top: 0;
+              width: 0px;
+              border-radius: 4px;
+              background: red;
+              height: 4px;
+              opacity: .8;
+            }
+          }
         }
         .vocal{
           flex: 2;

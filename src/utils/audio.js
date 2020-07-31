@@ -8,11 +8,11 @@ Play.prototype.play = function(src) {
     this.song.src = src
     setTimeout(() => {
       this.song.play()
-    }, 150)
+    }, 1000)
   } else {
     setTimeout(() => {
       this.song.play()
-    }, 150)
+    }, 1000)
   }
   this.isEnded()
 }
@@ -35,6 +35,10 @@ Play.prototype.isEnded = function() {
 
     this.play(urls[random].url)
   })
+}
+
+Play.prototype.duration = function(val) {
+  this.song.currentTime = val * this.song.duration
 }
 
 Play.prototype.volume = function(v) {

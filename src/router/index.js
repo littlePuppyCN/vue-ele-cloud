@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/player',
@@ -27,22 +27,22 @@ const routes = [
       {
         path: '/collection',
         name: 'Collection',
-        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/collection.vue')
+        component: () => import('@/components/songlist/collection.vue')
       },
       {
         path: '/lyric',
         name: 'Lyric',
-        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/lyric.vue')
+        component: () => import('@/components/songlist/lyric.vue')
       },
       {
         path: '/input',
         name: 'Input',
-        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/input.vue')
+        component: () => import('@/components/songlist/input.vue')
       },
       {
         path: '/personal',
         name: 'Personal',
-        component: () => import(/* webpackChunkName: "about" */ '@/components/songlist/personal.vue')
+        component: () => import('@/components/songlist/personal.vue')
       }
     ]
   }
